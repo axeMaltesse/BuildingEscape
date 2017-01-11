@@ -119,6 +119,7 @@ void UGrabber::Grab() {
 }
 
 void UGrabber::Release() {
+	if (!PhysicsHandle) { return; }
 	//release physics
 	PhysicsHandle->ReleaseComponent();
 }
@@ -127,7 +128,8 @@ void UGrabber::Release() {
 void UGrabber::TickComponent( float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction )
 {
 	Super::TickComponent( DeltaTime, TickType, ThisTickFunction );
-
+	//prevent to be a nullptr and crash the engine!!!
+	if (!PhysicsHandle) { return; }
 	//if physics handle is attached 
 	if (PhysicsHandle->GrabbedComponent) {
 		PhysicsHandle->SetTargetLocation(GetReachLineEnd());

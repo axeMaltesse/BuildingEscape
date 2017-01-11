@@ -52,6 +52,12 @@ void UOpeningDoor::TickComponent( float DeltaTime, ELevelTick TickType, FActorCo
 float UOpeningDoor::GetTotalMassOfActorsOnPlate()
 {
 	float TotalMass = 0.f;
+	
+	//prevent the nullptr to get used
+	if (!PressurePlate) { 
+		UE_LOG(LogTemp, Error, TEXT("Pressure plate is not assigned! Item %s"), *GetOwner()->GetName());
+		return 0; 
+	}
 
 	TArray<AActor*> OverlappingActors;
 	//find all the overlaping actors
