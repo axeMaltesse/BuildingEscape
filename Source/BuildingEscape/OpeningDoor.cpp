@@ -26,7 +26,8 @@ void UOpeningDoor::BeginPlay()
 
 void UOpeningDoor::OpenDoor() {
 	//Changing the position
-	Owner->SetActorRotation(FRotator(0.0f, OpenAngle, 0.f));
+	//Owner->SetActorRotation(FRotator(0.0f, OpenAngle, 0.f));
+	OnOpenRequest.Broadcast();
 }
 
 void UOpeningDoor::CloseDoor() {
