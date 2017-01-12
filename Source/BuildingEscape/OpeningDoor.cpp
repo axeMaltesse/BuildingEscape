@@ -24,29 +24,17 @@ void UOpeningDoor::BeginPlay()
 	Owner = GetOwner();
 }
 
-void UOpeningDoor::OpenDoor() {
-	//Changing the position
-	//Owner->SetActorRotation(FRotator(0.0f, OpenAngle, 0.f));
-	OnOpenRequest.Broadcast();
-}
-
-void UOpeningDoor::CloseDoor() {
-	//Changing the position
-	Owner->SetActorRotation(FRotator(0.0f, 0.0f, 0.f));
-}
-
 
 // Called every frame
 void UOpeningDoor::TickComponent( float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction )
 {
 	Super::TickComponent( DeltaTime, TickType, ThisTickFunction );
 
-	if (GetTotalMassOfActorsOnPlate() > 50.f) { //TODO change 50 to a editable variable 
-		OpenDoor();
-		LastDoorOpenTime = GetWorld()->GetTimeSeconds();
+	if (GetTotalMassOfActorsOnPlate() > TriggerMass) { //TODO change 50 to a editable variable 
+		OnOpenRequest.Broadcast();
 	}
-	if (GetWorld()->GetTimeSeconds()-LastDoorOpenTime > DoorCloseDelay) {
-		CloseDoor();
+	else {
+		OnCloseRequest.Broadcast();
 	}
 }
 
